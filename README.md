@@ -1,5 +1,6 @@
 
-Domain specific compression of deformed atomistic sheet geometries using sparse approximation.
+# `sheetSparse`
+Represent atomistic sheet geometries in a reduced basis using sparse approximation.
 
 ### Theory
 All discrete objects are written in brackets, continuum objects are unadorned.
