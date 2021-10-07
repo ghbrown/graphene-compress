@@ -90,5 +90,7 @@ One can then appeal directly to methods like the discrete cosine transform, sinc
 
 **WILL THIS CAUSE ISSUES WHEN ATTEMPTING TO RECOVER THE REAL SPACE FUNCTION SINCE DCT ASSUMES UNIFORM SPACING???**
 
+**REQUIRES ATOM LABELS/KNOWN ORDERING RELATIVE TO PRISTINE LATTICE*
+
 **Basis pursuit**: retain real space structure, construct real space basis functions 
 
