@@ -43,44 +43,6 @@ min ||a||_0  subject to  ||x - B w||_2^2 <= tolerance^2.
 
 This formulation suggests directly the use of classical algorithms for sparse approximation.
 
-### Implementation
-One possible way to extract the reduced the reduced basis representation is by transforming the displacement field into a rectangular array with three "channels".
-For example the displacement between the pristine lattice and distorted lattices
-```
-                  (pristine)                          (distorted)
-           .___________.___________.           .___________.___________.
-          /   (b_3)   /   (b_4)   /           / (b_3)     /     (b_4) /
-         /           /           /           /           /           /
-        /  (a_3)    /  (a_4)    /           /    (a_3)  /  (a_4)    /
-       /___________/___________/           /___________/___________/
-      /   (b_1)   /   (b_2)   /           /   (b_1)   / (b_2)     /
-     /           /           /           /           /           /
-    /  (a_1)    /  (a_2)    /           /  (a_1)    /  (a_2)    /
-   /___________/___________/           /___________/___________/
-```
-could be represented in the following rectangular arrays
-```
-S_x =
- _                                        _
-|  s_x_(a_1) s_x_(b_1) s_x_(a_2) s_x_(b_2) |
-|  s_x_(a_3) s_x_(b_3) s_x_(a_4) s_x_(b_4) |
- _										  _
-
-S_y =
- _                                        _
-|  s_y_(a_1) s_y_(b_1) s_y_(a_2) s_y_(b_2) |
-|  s_y_(a_3) s_y_(b_3) s_y_(a_4) s_y_(b_4) |
- _										  _
-
-S_z =
- _                                        _
-|  s_z_(a_1) s_z_(b_1) s_z_(a_2) s_z_(b_2) |
-|  s_z_(a_3) s_z_(b_3) s_z_(a_4) s_z_(b_4) |
- _										  _
-```
-
-One can then appeal directly to methods like the discrete cosine transform, since the atomic information has been neatly packaged into the appropriate form.
-
 
 ### Uses
 In practice, one should be able to reconstruct atomic geometries by injecting pristine atomic coordinates into the sparse representation.
@@ -90,4 +52,43 @@ The applications of such a representation are likely to be more intersting than 
 For example, having a good sparse representation of the layer lends itself well to continuum models, where the representation would be infinitely differentiable (so long as the basis functions are).
 Further, expensive operations (like geometry optimization) could now be performed on the system in the reduced basis than the raw atomic coordinates.
 
+
+### Implementation
+**Discrete Cosine Transform**: One possible way to extract the reduced the reduced basis representation is by transforming the displacement field into a rectangular array with "channels", which can then be likened to images, themselves amenable to standard image compression techniques.
+For example the displacement between the pristine lattice and distorted lattices
+```
+                 (pristine)                         (distorted)
+          .___________.___________.          .___________.___________.
+         /   (b_3)   /   (b_4)   /          / (b_3)     /     (b_4) /
+        /           /           /          /           /           /
+       /  (a_3)    /  (a_4)    /          /    (a_3)  /  (a_4)    /
+      /___________/___________/          /___________/___________/
+     /   (b_1)   /   (b_2)   /          /   (b_1)   / (b_2)     /
+    /           /           /          /           /           /
+   /  (a_1)    /  (a_2)    /          /  (a_1)    /  (a_2)    /
+  /___________/___________/          /___________/___________/
+```
+could be represented in the following rectangular arrays
+```
+         _                                        _
+ S_x =  |  s_x_(a_1) s_x_(b_1) s_x_(a_2) s_x_(b_2) |
+	    |  s_x_(a_3) s_x_(b_3) s_x_(a_4) s_x_(b_4) |
+	     _                                        _
+         _                                        _
+ S_y =  |  s_y_(a_1) s_y_(b_1) s_y_(a_2) s_y_(b_2) |
+	    |  s_y_(a_3) s_y_(b_3) s_y_(a_4) s_y_(b_4) |
+	     _                                        _
+         _                                        _
+ S_z =  |  s_z_(a_1) s_z_(b_1) s_z_(a_2) s_z_(b_2) |
+	    |  s_z_(a_3) s_z_(b_3) s_z_(a_4) s_z_(b_4) |
+	     _                                        _
+```
+where each mode of the array corresponds to one basis vector, and the atomic basis is injected along a single mode.
+In general, the array (for a single dimension) is then of shape `(n_lat_vec_1*atomic_basis_size, n_lat_vec_2, ..., n_lat_vec_m)` for a lattice in `m` dimensions, assuming the atomic basis has been injected along the first mode.
+
+One can then appeal directly to methods like the discrete cosine transform, since the atomic information has been neatly packaged into the appropriate form.
+
+**WILL THIS CAUSE ISSUES WHEN ATTEMPTING TO RECOVER THE REAL SPACE FUNCTION SINCE DCT ASSUMES UNIFORM SPACING???**
+
+**Basis pursuit**: retain real space structure, construct real space basis functions 
 
