@@ -1,5 +1,5 @@
 
-# `sheetSparse`
+## `sheetSparse`
 Represent atomistic sheet geometries in a reduced basis using sparse approximation.
 
 ### Theory
@@ -42,6 +42,44 @@ min ||a||_0  subject to  ||x - B w||_2^2 <= tolerance^2.
 ```
 
 This formulation suggests directly the use of classical algorithms for sparse approximation.
+
+### Implementation
+One possible way to extract the reduced the reduced basis representation is by transforming the displacement field into a rectangular array with three "channels".
+For example the displacement between the pristine lattice and distorted lattices
+```
+                  (pristine)                          (distorted)
+           .___________.___________.           .___________.___________.
+          /   (b_3)   /   (b_4)   /           / (b_3)     /     (b_4) /
+         /           /           /           /           /           /
+        /  (a_3)    /  (a_4)    /           /    (a_3)  /  (a_4)    /
+       /___________/___________/           /___________/___________/
+      /   (b_1)   /   (b_2)   /           /   (b_1)   / (b_2)     /
+     /           /           /           /           /           /
+    /  (a_1)    /  (a_2)    /           /  (a_1)    /  (a_2)    /
+   /___________/___________/           /___________/___________/
+```
+could be represented in the following rectangular arrays
+```
+S_x =
+ _                                        _
+|  s_x_(a_1) s_x_(b_1) s_x_(a_2) s_x_(b_2) |
+|  s_x_(a_3) s_x_(b_3) s_x_(a_4) s_x_(b_4) |
+ _										  _
+
+S_y =
+ _                                        _
+|  s_y_(a_1) s_y_(b_1) s_y_(a_2) s_y_(b_2) |
+|  s_y_(a_3) s_y_(b_3) s_y_(a_4) s_y_(b_4) |
+ _										  _
+
+S_z =
+ _                                        _
+|  s_z_(a_1) s_z_(b_1) s_z_(a_2) s_z_(b_2) |
+|  s_z_(a_3) s_z_(b_3) s_z_(a_4) s_z_(b_4) |
+ _										  _
+```
+
+One can then appeal directly to methods like the discrete cosine transform, since the atomic information has been neatly packaged into the appropriate form.
 
 
 ### Uses
