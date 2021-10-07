@@ -73,15 +73,15 @@ could be represented in the following rectangular arrays
          _                                        _
  S_x =  |  s_x_(a_1) s_x_(b_1) s_x_(a_2) s_x_(b_2) |
 	    |  s_x_(a_3) s_x_(b_3) s_x_(a_4) s_x_(b_4) |
-	     _                                        _
+         _                                        _
          _                                        _
  S_y =  |  s_y_(a_1) s_y_(b_1) s_y_(a_2) s_y_(b_2) |
 	    |  s_y_(a_3) s_y_(b_3) s_y_(a_4) s_y_(b_4) |
-	     _                                        _
+         _                                        _
          _                                        _
  S_z =  |  s_z_(a_1) s_z_(b_1) s_z_(a_2) s_z_(b_2) |
-	    |  s_z_(a_3) s_z_(b_3) s_z_(a_4) s_z_(b_4) |
-	     _                                        _
+        |  s_z_(a_3) s_z_(b_3) s_z_(a_4) s_z_(b_4) |
+         _                                        _
 ```
 where each mode of the array corresponds to one basis vector, and the atomic basis is injected along a single mode.
 In general, the array (for a single dimension) is then of shape `(n_lat_vec_1*atomic_basis_size, n_lat_vec_2, ..., n_lat_vec_m)` for a lattice in `m` dimensions, assuming the atomic basis has been injected along the first mode.
