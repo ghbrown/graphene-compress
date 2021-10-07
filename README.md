@@ -72,11 +72,11 @@ could be represented in the following rectangular arrays
 ```
          _                                        _
  S_x =  |  s_x_(a_1) s_x_(b_1) s_x_(a_2) s_x_(b_2) |
-	    |  s_x_(a_3) s_x_(b_3) s_x_(a_4) s_x_(b_4) |
+        |  s_x_(a_3) s_x_(b_3) s_x_(a_4) s_x_(b_4) |
          _                                        _
          _                                        _
  S_y =  |  s_y_(a_1) s_y_(b_1) s_y_(a_2) s_y_(b_2) |
-	    |  s_y_(a_3) s_y_(b_3) s_y_(a_4) s_y_(b_4) |
+        |  s_y_(a_3) s_y_(b_3) s_y_(a_4) s_y_(b_4) |
          _                                        _
          _                                        _
  S_z =  |  s_z_(a_1) s_z_(b_1) s_z_(a_2) s_z_(b_2) |
