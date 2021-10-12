@@ -5,7 +5,10 @@ import ase
 
 #read in generic graphene geometry using ASE
 
-#transform coordinates to unit cell?
+#transform coordinates to unit cell rather or transform basis functions to real space cell
+#def dct_basis_fun(x,k,latvecs)
+#    evaluates the kth DCT basis function at point(s) x given that the atoms are in a cell with
+#    lattice vectors latvecs
 """
 given unit cell with basis vectors at angle theta, with unit cell height h
 and unit cell length l+h*sin(theta)

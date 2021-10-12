@@ -94,3 +94,6 @@ One can then appeal directly to methods like the discrete cosine transform, sinc
 
 **Basis pursuit**: retain real space structure, construct real space basis functions 
 
+## Resources
+- [sparse representation of point cloud data with learned dictionaries](https://www.researchgate.net/publication/311668564_Cloud_Dictionary_Sparse_Coding_and_Modeling_for_Point_Clouds#pf2)
+
