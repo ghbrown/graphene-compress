@@ -24,7 +24,7 @@ S' = w_1*b_1 + w_2*b_2 + ... + w_n*b_n
 
 Here we represent the displacement field in the basis `B`, which contains an infinite number of functions `{b_0,b_1,...}`.
 
-In practice, `n` is determined by the residual of our representation `S([F]) - S([F])'` being sufficiently small.
+In practice, `n` is determined by the residual of our representation `S([P]) - S([P])'` being sufficiently small.
 
 Bounds on `n` can also be derived by using the Nyquist-Shannon theorem while taking into account the cell size and number of atoms, etc, though this may depend somewhat on the chosen basis.
 
