@@ -53,45 +53,33 @@ Further, expensive operations (like geometry optimization) could now be performe
 
 
 ### Implementation
-**Discrete Cosine Transform**: One possible way to extract the reduced the reduced basis representation is by transforming the displacement field into a rectangular array with "channels", which can then be likened to images, themselves amenable to standard image compression techniques.
-For example the displacement between the pristine lattice and distorted lattices
-```
-                 (pristine)                         (distorted)
-          .___________.___________.          .___________.___________.
-         /   (b_3)   /   (b_4)   /          / (b_3)     /     (b_4) /
-        /           /           /          /           /           /
-       /  (a_3)    /  (a_4)    /          /    (a_3)  /  (a_4)    /
-      /___________/___________/          /___________/___________/
-     /   (b_1)   /   (b_2)   /          /   (b_1)   / (b_2)     /
-    /           /           /          /           /           /
-   /  (a_1)    /  (a_2)    /          /  (a_1)    /  (a_2)    /
-  /___________/___________/          /___________/___________/
-```
-could be represented in the following rectangular arrays
-```
-         _                                        _
- S_x =  |  s_x_(a_1) s_x_(b_1) s_x_(a_2) s_x_(b_2) |
-        |  s_x_(a_3) s_x_(b_3) s_x_(a_4) s_x_(b_4) |
-         _                                        _
-         _                                        _
- S_y =  |  s_y_(a_1) s_y_(b_1) s_y_(a_2) s_y_(b_2) |
-        |  s_y_(a_3) s_y_(b_3) s_y_(a_4) s_y_(b_4) |
-         _                                        _
-         _                                        _
- S_z =  |  s_z_(a_1) s_z_(b_1) s_z_(a_2) s_z_(b_2) |
-        |  s_z_(a_3) s_z_(b_3) s_z_(a_4) s_z_(b_4) |
-         _                                        _
-```
-where each mode of the array corresponds to one basis vector, and the atomic basis is injected along a single mode.
-In general, the array (for a single dimension) is then of shape `(n_lat_vec_1*atomic_basis_size, n_lat_vec_2, ..., n_lat_vec_m)` for a lattice in `m` dimensions, assuming the atomic basis has been injected along the first mode.
+**A note on mapping**
 
-One can then appeal directly to methods like the discrete cosine transform, since the atomic information has been neatly packaged into the appropriate form.
+Given an `n`-D parallelepiped domain defined by the `n` columns of matrix `V`, one would like to map back to the unit `n`-cube, where basis functions are more easily defined.
+Let `L` be the mapping from unit `n`-cube basis (the indentity) to the parallelepiped basis.
+```
+L I = V  --> L = V.
+```
+The inverse of `L` is then a linear map from the parallelepiped basis to the `n`-cube basis
+```
+L^{-1} V = I.
+```
+Imagine one has the basis function `g(v)` defined over coordinates in the unit `n`-cube and seeks the mapping of this function `f(x)` onto the parallelepiped coordinates `x`.
+Then
+```
+f(x) = g(L^{-1} x).
+```
+Mechanically, this is done be reverting the parallelepiped coordinates to the unit `n`-cube with the inverse, then computing the basis function values.
+However, since the final sparse representation should be in terms of coefficients of functions over parallelepiped coordinates, it is useful to consider an example of what said basis functions would look like.
+Consider the real cosine basis functions in `n` dimensions as an example.
+The general form of a function from this basis is
+```
+b(x) = PROD_{d=1}^{n} cos(2*pi*v_d*k_d)
+     = PROD_{d=1}^{n} cos(2*pi*(L^{-1} x)_d*k_d)
+     = PROD_{d=1}^{n} cos(2*pi*(L^{-1}[d,:] \cdot x)*k_d)
+```
 
-**WILL THIS CAUSE ISSUES WHEN ATTEMPTING TO RECOVER THE REAL SPACE FUNCTION SINCE DCT ASSUMES UNIFORM SPACING???**
-
-**REQUIRES ATOM LABELS/KNOWN ORDERING RELATIVE TO PRISTINE LATTICE**
-
-**Basis pursuit**: retain real space structure, construct real space basis functions 
+**Basis pursuit**: construct real space basis functions over the parallelepiped domain as atoms in dictionary, then proceed as usual with matching pursuit
 
 ## Resources
 - [sparse representation of point cloud data with learned dictionaries](https://www.researchgate.net/publication/311668564_Cloud_Dictionary_Sparse_Coding_and_Modeling_for_Point_Clouds#pf2)
