@@ -83,4 +83,5 @@ b(x) = PROD_{d=1}^{n} cos(2*pi*v_d*k_d)
 
 ## Resources
 - [sparse representation of point cloud data with learned dictionaries](https://www.researchgate.net/publication/311668564_Cloud_Dictionary_Sparse_Coding_and_Modeling_for_Point_Clouds#pf2)
+- [3-D discrete cosine transform for point cloud data](https://ieeexplore.ieee.org/document/8078873)
 

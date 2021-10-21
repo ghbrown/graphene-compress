@@ -1,3 +1,43 @@
+import itertools
+import numpy as np
+from numpy import arange
+from numpy import prod as a_prod
+
+def create_dictionaries(k_max_array,coords_u):
+    """
+    generates a dictionary for each dimension of the data which contains
+    wavenumbers up to those in k_max_array
+    ---Inputs---
+    k_max_array : {numpy array}
+        array containing the maximum wavenumbers, shape (n_dim, n_dim),
+        k_max_array[i,j] gives the maximum wavenumber in the jth dimension
+        for the displacement in dimension i
+    coords_u : {numpy array}
+        coordinates transformed into unit n-cube, shape (n_points, n_dim)
+    ---Outputs---
+    dicts : {list}
+        list of sparse approximation dictionaries for each dimension,
+        dicts[i] is the sparse approximation dictionary of the displacement
+        in dimension i
+    """
+
+    n_points = coords_u.shape[0]
+    n_dim = coords_u.shape[1]
+    dicts = []*n_dim
+    for i_d,k_max_vec in enumerate(k_max_array): #loop over dimensions
+        k_range_array = [arange(elem+1,dtype='f') for elem in k_max_vec]
+        k_perm_iterator = itertools.product(*k_range_array) #iterator of tensor
+        #product of ranges/rows in k_range_array
+        n_perms = a_prod(k_max_vec) #total number of permutations from tensor product
+
+        dict_cur = np.empty((n_points,n_perms))
+        for k_vec in k_perm_iterator:
+            #add basis evaluations at points with wavenumbers in k_vec
+            pass
+
+        dicts[i_d] = dict_cur #insert current dictionary into list
+    return dicts
+
 
 """
 #here is the code you'll need to generate this stuff
@@ -22,3 +62,13 @@ for i_d,k_max_vec in enumerate(k_max_array):
 
 return dicts
 """
+
+
+k_maxes = np.array([[1,2,3],
+                    [2,2,2],
+                    [4,5,1]])
+create_dictionaries(k_maxes,0)
+
+
+
+
