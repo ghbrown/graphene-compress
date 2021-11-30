@@ -4,21 +4,26 @@ from numpy import linspace
 from numpy.random import rand
 import matplotlib.pyplot as plt
 
-from .context import sheetsparse
+import sheetsparse as ss
+from sheetsparse import map, bases
+from sheetsparse.map import n_clinic_to_unit_cube
 from sheetsparse.bases import dct_2
 
 #1-D unit interval
-dim = 1
+dim = 1 #number of spatial dimensions
 points = empty((100,dim))
-points [:,0] = linspace(0,1,100)
-wn = array([1])
-evals = dct_2(points,wn,eye(dim))
+x_max = 6
+points [:,0] = linspace(0,x_max,100)
+u_points =  n_clinic_to_unit_cube(points,x_max*np.eye(dim)) #points on unit interval
+wn = array([1]) #wavenumber
+evals = dct_2(points,wn) #function values on u_points of a single dct_2 mode wn
 plt.plot(points,evals,'k',label=(r'$k_x =' + str(wn[0]) + r'$'))
 plt.xlabel(r'$x$')
 plt.ylabel(r'$\cos(2 \pi k_x x)$')
 plt.legend()
 plt.show()
 
+"""
 surfcolor = 'brown' #set color of trisurf plots
 #2-D unit square
 dim = 2
@@ -73,3 +78,4 @@ ax.set_ylabel(r'$x_2$')
 ax.set_zlabel(r'$\cos(2 \pi k_1 (\mathbf{L}^{-1}\mathbf{x})_1) \cos(2 \pi k_2 (\mathbf{L}^{-1}\mathbf{x})_2)$')
 plt.title('basis: [1,0],[1,1]')
 plt.show()
+"""
