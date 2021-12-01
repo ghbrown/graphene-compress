@@ -1,9 +1,17 @@
 
-
+from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
+import ase
+from ase import io
+
 import sheetsparse as ss
 from sheetsparse import map, bases, dictionaries
+
+
+#use path relative to this file
+geo_file_path = str(Path(__file__).parent) + '/../data/POSCAR_4-4.txt'
+atoms = ase.io.read(geo_file_path,format='vasp') #this read isn't working
 
 #test map
 n = 20

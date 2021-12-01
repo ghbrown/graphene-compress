@@ -29,8 +29,9 @@ def create_dictionary(k_max_array,basis_function,u_array):
             dimension i
     """
 
-    if (unique(k_max_array).shape[0] = 1):
-        pass #you can save som computation when k_max_array has a single value
+    if (unique(k_max_array).shape[0] == 1):
+        pass
+        #you can save som computation when k_max_array has a single value
         #since all the dictionaries will be the same
         
 
